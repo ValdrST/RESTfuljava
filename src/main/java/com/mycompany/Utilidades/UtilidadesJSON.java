@@ -29,6 +29,19 @@ public class UtilidadesJSON {
 		return obj.toString();
 	}
     
+    public static String construirUsuarioJSON(String id, String nombre, String password){
+        JSONObject obj = new JSONObject();
+        try{
+            obj.put("id", id);
+            obj.put("nombre", nombre);
+            obj.put("password", password);
+            
+        }catch(JSONException e){
+            
+        }
+        return obj.toString();
+    }
+    
     public static String constructJSON(String tag, boolean status,String err_msg) {
 		JSONObject obj = new JSONObject();
 		try {

@@ -96,7 +96,8 @@ public class FinDeUsuario {
     
     private int registro(String login, String password) throws Exception {
         int estado=0;
-        boolean resultado = ConexionBD.insertarUsuario(login,UtilidadesDePasswords.digestPassword(password));
+        password = UtilidadesDePasswords.digestPassword(password);
+        boolean resultado = ConexionBD.insertarUsuario(login,password);
         if(resultado==true){
             estado = 1;
         }else 
@@ -106,7 +107,8 @@ public class FinDeUsuario {
 
     private void authenticate(String login, String password) throws Exception {
         boolean resultado;
-        resultado = ConexionBD.checkLogin(login, UtilidadesDePasswords.digestPassword(password));
+        password = UtilidadesDePasswords.digestPassword(password);
+        resultado = ConexionBD.checkLogin(login, password);
         if ( resultado == false)
             throw new SecurityException("Usuario o contraseña invalidos");
     }
@@ -120,7 +122,7 @@ public class FinDeUsuario {
                 .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
-        logger.log(Level.INFO, "#### generating token for a key : {0} - {1}", new Object[]{jwtToken, key});
+        logger.log(Level.INFO, "#### generar token de usuario: {0} - {1}", new Object[]{jwtToken, key});
         return jwtToken;
     }
 
@@ -143,13 +145,7 @@ public class FinDeUsuario {
 
     @GET
     public Response findAllUsers() {
-        TypedQuery<Usuario> query = em.createNamedQuery(Usuario.FIND_ALL, Usuario.class);
-        List<Usuario> allUsers = query.getResultList();
-
-        if (allUsers == null)
-            return Response.status(NOT_FOUND).build();
-
-        return Response.ok(allUsers).build();
+        return Response.ok().build();
     }
 
     @DELETE

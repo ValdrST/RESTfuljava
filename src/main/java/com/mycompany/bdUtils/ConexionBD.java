@@ -40,8 +40,9 @@ public class ConexionBD {
 			}
 			Statement stmt = dbConn.createStatement();
 			String query = "SELECT * FROM usuario WHERE nombre = '" + uname
-					+ "' AND password=" + "'" + pwd + "'";
+					+ "' AND password= '" + pwd + "'";
 			ResultSet rs = stmt.executeQuery(query);
+                        System.out.println(rs);
 			while (rs.next()) {
 				isUserAvailable = true;
 			}
@@ -60,6 +61,11 @@ public class ConexionBD {
 		return isUserAvailable;
 	}
         
+        public static String TodosLosUsuarios()throws SQLException, Exception{
+            Connection dbConn = null;
+            return "";
+        }
+        
 	public static boolean insertarUsuario(String name, String pwd) throws SQLException, Exception {
 		boolean insertStatus = false;
 		Connection dbConn = null;
@@ -74,6 +80,7 @@ public class ConexionBD {
 			String query = "INSERT into usuario(id, nombre, password) values('"+id+"','"+name+ "',"+ "'" + pwd + "')";
 			System.out.println(query);
                         int records = stmt.executeUpdate(query);
+                        
 			if (records > 0) {
 				insertStatus = true;
 			}
