@@ -18,17 +18,33 @@ import java.util.UUID;
  * @author dark_
  */
 
-@Entity
+
 @Table(name = "usuario")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Usuario {
-    @Id
+
     private String id;
-    @Column(length = 10, nullable = false)
     private String login;
-    @Column(length = 256, nullable = false)
     private String password;
+    private String rol;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
     
     public Usuario() {
     }
@@ -41,6 +57,18 @@ public class Usuario {
         this.id = id;
         this.login = login;
         this.password = password;
+    }
+
+    public Usuario(String login, String password, String rol, String token) {
+        this.login = login;
+        this.password = password;
+        this.rol = rol;
+        this.token = token;
+    }
+    
+    public Usuario(String id, String login) {
+        this.id = id;
+        this.login = login;
     }
     
     @PrePersist
@@ -85,4 +113,6 @@ public class Usuario {
     public int hashCode() {
         return Objects.hash(id);
     }
+    
+    
 }

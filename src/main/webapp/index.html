@@ -4,6 +4,8 @@
 <head>
     <title>RESTFUL java</title>
 </head>
+<a href="api/echo?message=hello">Hola visitante</a><br/>
+<a href="api/echo/jwt?message=hello">Hola usuario (Validado con JWT)</a><br/>
 <body>
 <h1>PRimera Prueba</h1>
 <h2>Login</h2>
@@ -17,6 +19,13 @@
 <form method="post" enctype="application/x-www-form-urlencoded" action="api/users/register">
     Login: <input type="text" name="name"><br/>
     Password: <input type="password" name="password"><br/>
+    rol: <input list="rol">
+    <datalist id="rol">
+        <option value="admin">
+        <option value="user">
+        <option value="guest">
+    </datalist>
+      
     <input type="submit" name="Registro"/>
 </form>
 

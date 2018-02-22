@@ -12,7 +12,7 @@ package com.mycompany.bdUtils;
 public class ConstantesBD {
     public static String dbClass = "com.mysql.jdbc.Driver";
     private static final String dbName= "usuarios";
-    public static String dbUrl = "jdbc:mysql://localhost:3308/"+dbName;
+    public static String dbUrl = "jdbc:mysql://localhost:3308/"+dbName+"?useServerPrepStmts=true";
     public static String dbUser = "valdr";
     public static String dbPwd = "nomad123";
 }

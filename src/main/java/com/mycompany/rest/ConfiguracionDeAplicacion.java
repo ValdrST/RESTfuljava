@@ -1,4 +1,5 @@
 package com.mycompany.rest;
+import javax.annotation.security.DeclareRoles;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 /*
@@ -12,6 +13,7 @@ import javax.ws.rs.core.Application;
  * @author dark_
  */
 @ApplicationPath("api")
+@DeclareRoles({"admin", "user", "guest"})
 public class ConfiguracionDeAplicacion extends Application {
     
 }

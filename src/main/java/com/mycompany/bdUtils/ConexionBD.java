@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 package com.mycompany.bdUtils;
+import com.mycompany.Usuario.Usuario;
+import com.mycompany.excepciones.ExceptionUsuarioNoEncontrado;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -35,7 +38,6 @@ public class ConexionBD {
 			try {
 				dbConn = ConexionBD.createConnection();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			Statement stmt = dbConn.createStatement();
@@ -66,7 +68,7 @@ public class ConexionBD {
             return "";
         }
         
-	public static boolean insertarUsuario(String name, String pwd) throws SQLException, Exception {
+	public static boolean insertarUsuario(String name, String pwd, String rol) throws SQLException, Exception {
 		boolean insertStatus = false;
 		Connection dbConn = null;
 		try {
@@ -77,7 +79,7 @@ public class ConexionBD {
 			}
                         String id = UUID.randomUUID().toString().replace("-", "");
 			Statement stmt = dbConn.createStatement();
-			String query = "INSERT into usuario(id, nombre, password) values('"+id+"','"+name+ "',"+ "'" + pwd + "')";
+			String query = "INSERT into usuario(id, nombre, password, rol) values('"+id+"','"+name+ "',"+ "'" + pwd + "','"+rol+"')";
 			System.out.println(query);
                         int records = stmt.executeUpdate(query);
                         
@@ -98,4 +100,37 @@ public class ConexionBD {
 		}
 		return insertStatus;
 	}
+        
+        public static Usuario obtenerUsuario (String id) throws ExceptionUsuarioNoEncontrado, Exception{
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Usuario user = null;
+        try{
+            Connection dbConn=ConexionBD.createConnection();
+            
+            stmt=dbConn.prepareStatement("SELECT id, nombre FROM usuario WHERE id=;");
+            stmt.setString(1,id);
+            rs=stmt.executeQuery();
+            if(rs.next()){
+                String uid = rs.getString("id");
+		String nombre = rs.getString("nombre");
+                user = new Usuario(uid,nombre);
+                return user;
+            }else{
+                ExceptionUsuarioNoEncontrado ex = new ExceptionUsuarioNoEncontrado(id);
+            }     
+        }catch(SQLException e){
+
+        } catch (Exception ex) {
+        }
+        finally{
+            try{
+                rs.close();
+                stmt.close();
+            }catch ( SQLException e ) {
+
+            }
+        }
+        return user;
+    }
 }
